@@ -69,7 +69,7 @@ jobs:
       uses: actions/jest-badges-action@v1.3.1
         with:
           branches: master,preprod,staging
-          # If the jest test folder is not the current pwd, you can set this
+          # If the jest test root folder is not the current pwd, you can set this
           # workingDir: packages/somePackage
 
 ```
