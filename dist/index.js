@@ -195,10 +195,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isJestCoverageReportAvailable = void 0;
+const path_1 = __nccwpck_require__(5622);
 const fs_extra_1 = __nccwpck_require__(4982);
+const core_1 = __nccwpck_require__(5537);
 const isUndefined = (element) => (element === null || element === void 0 ? void 0 : element.pct) === undefined;
 const isJestCoverageReportAvailable = () => __awaiter(void 0, void 0, void 0, function* () {
-    const coverageSummaryPath = "./coverage/coverage-summary.json";
+    var _a;
+    const coverageSummaryPath = path_1.resolve((_a = core_1.getInput('workingDir')) !== null && _a !== void 0 ? _a : '.', 'coverage/coverage-summary.json');
+    console.log(`Searching 'coverage-summary.json' file in ${coverageSummaryPath}`);
     const coverageExists = yield fs_extra_1.pathExists(coverageSummaryPath);
     if (!coverageExists) {
         return false;
@@ -248,7 +252,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.actionWorkflow = void 0;
-const node_jest_badges_1 = __nccwpck_require__(7017);
+const node_jest_badges_1 = __nccwpck_require__(2031);
 const core_1 = __nccwpck_require__(5537);
 const pushBadges_1 = __nccwpck_require__(3474);
 const setGitConfig_1 = __nccwpck_require__(2967);
@@ -10033,7 +10037,7 @@ exports.FetchError = FetchError;
 
 /***/ }),
 
-/***/ 8529:
+/***/ 4925:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -10047,7 +10051,7 @@ exports.summaryPath = path_1.join(process.cwd(), "coverage", "coverage-summary.j
 
 /***/ }),
 
-/***/ 1305:
+/***/ 4015:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -10064,20 +10068,20 @@ exports.summaryKeys = [
 
 /***/ }),
 
-/***/ 7017:
+/***/ 2031:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.generateBadges = void 0;
-var generateBadges_logic_1 = __nccwpck_require__(3499);
+var generateBadges_logic_1 = __nccwpck_require__(4467);
 Object.defineProperty(exports, "generateBadges", ({ enumerable: true, get: function () { return generateBadges_logic_1.generateBadges; } }));
 
 
 /***/ }),
 
-/***/ 2126:
+/***/ 8621:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -10096,15 +10100,15 @@ exports.getBadgeColor = getBadgeColor;
 
 /***/ }),
 
-/***/ 2653:
+/***/ 4869:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getBadgeUrl = void 0;
-var coveragePercentage_logic_1 = __nccwpck_require__(3268);
-var badgeColor_logic_1 = __nccwpck_require__(2126);
+var coveragePercentage_logic_1 = __nccwpck_require__(5143);
+var badgeColor_logic_1 = __nccwpck_require__(8621);
 var getBadgeUrl = function (summary, key) {
     var percentage = coveragePercentage_logic_1.getPercentage(summary, key);
     if (percentage === undefined)
@@ -10119,14 +10123,14 @@ exports.getBadgeUrl = getBadgeUrl;
 
 /***/ }),
 
-/***/ 3268:
+/***/ 5143:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getPercentage = void 0;
-var summaryKeys_constant_1 = __nccwpck_require__(1305);
+var summaryKeys_constant_1 = __nccwpck_require__(4015);
 var getTotalPercentage = function (summary) {
     var result = summaryKeys_constant_1.summaryKeys
         .map(function (k) { return summary.total[k].pct || 0; })
@@ -10148,7 +10152,7 @@ exports.getPercentage = getPercentage;
 
 /***/ }),
 
-/***/ 3499:
+/***/ 4467:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -10197,9 +10201,9 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.generateBadges = void 0;
 var fs_extra_1 = __nccwpck_require__(4982);
-var fileSystem_constants_1 = __nccwpck_require__(8529);
-var summaryKeys_constant_1 = __nccwpck_require__(1305);
-var generateCoverageFile_logic_1 = __nccwpck_require__(1149);
+var fileSystem_constants_1 = __nccwpck_require__(4925);
+var summaryKeys_constant_1 = __nccwpck_require__(4015);
+var generateCoverageFile_logic_1 = __nccwpck_require__(747);
 var generateBadges = function () { return __awaiter(void 0, void 0, void 0, function () {
     var summary;
     return __generator(this, function (_a) {
@@ -10210,11 +10214,14 @@ var generateBadges = function () { return __awaiter(void 0, void 0, void 0, func
                 return [4, fs_extra_1.ensureDir(fileSystem_constants_1.outputDir)];
             case 2:
                 _a.sent();
+                return [4, fs_extra_1.emptyDir(fileSystem_constants_1.outputDir)];
+            case 3:
+                _a.sent();
                 return [4, Promise.all([
                         __spreadArray([], summaryKeys_constant_1.summaryKeys).map(function (key) { return generateCoverageFile_logic_1.generateCoverageFile(summary, key); }),
-                        generateCoverageFile_logic_1.generateCoverageFile(summary, "global coverage"),
+                        generateCoverageFile_logic_1.generateCoverageFile(summary, 'global coverage'),
                     ])];
-            case 3:
+            case 4:
                 _a.sent();
                 return [2];
         }
@@ -10225,7 +10232,7 @@ exports.generateBadges = generateBadges;
 
 /***/ }),
 
-/***/ 1149:
+/***/ 747:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -10270,9 +10277,9 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.generateCoverageFile = void 0;
 var fs_extra_1 = __nccwpck_require__(4982);
 var path_1 = __nccwpck_require__(5622);
-var fileSystem_constants_1 = __nccwpck_require__(8529);
-var badgeUrl_logic_1 = __nccwpck_require__(2653);
-var download_logic_1 = __nccwpck_require__(9356);
+var fileSystem_constants_1 = __nccwpck_require__(4925);
+var badgeUrl_logic_1 = __nccwpck_require__(4869);
+var download_logic_1 = __nccwpck_require__(1668);
 var generateCoverageFile = function (summary, key) { return __awaiter(void 0, void 0, void 0, function () {
     var badgeUrl, path, file;
     return __generator(this, function (_a) {
@@ -10299,7 +10306,7 @@ exports.generateCoverageFile = generateCoverageFile;
 
 /***/ }),
 
-/***/ 9356:
+/***/ 1668:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
