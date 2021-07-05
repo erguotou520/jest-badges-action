@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import { pathExists, readJson } from 'fs-extra';
 import { CoverageSummary, FileCoverageTotal } from 'node-jest-badges';
-import { getInput, info } from '@actions/core';
+import { getInput } from '@actions/core';
 
 const isUndefined = (element?: FileCoverageTotal) => element?.pct === undefined;
 
@@ -11,7 +11,7 @@ interface JestCoverage {
 
 export const isJestCoverageReportAvailable = async (): Promise<boolean> => {
   const coverageSummaryPath = resolve(getInput('workingDir') ?? '.', 'coverage/coverage-summary.json');
-  info(`Searching 'coverage-summary.json' file in ${coverageSummaryPath}`)
+  console.log(`Searching 'coverage-summary.json' file in ${coverageSummaryPath}`)
   const coverageExists = await pathExists(coverageSummaryPath);
   if (!coverageExists) {
     return false;
