@@ -5,6 +5,9 @@ inputs:
   branches:
     description: 'Branches on which the badges should be generated. Commas separated.'
     default: 'master'
+  workingDir:
+    description: 'Working dir for the job'
+    default: '.'
 
 runs:
   using: 'node12'

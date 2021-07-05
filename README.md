@@ -30,6 +30,12 @@ Branches on which the badges should be generated, separated by commas.
 
 > Default value: **master**
 
+### :diamonds: `workingDir`
+
+Working dir for the job.
+
+> Default value: **master**
+
 ## :zap: Usage
 
 Let's first define an npm script to run jest in package.json, specifying the coverage option to generate a coverage report:
@@ -63,6 +69,8 @@ jobs:
       uses: actions/jest-badges-action@v1.3.1
         with:
           branches: master,preprod,staging
+          # If the jest test folder is not the current pwd, you can set this
+          # workingDir: packages/somePackage
 
 ```
 
